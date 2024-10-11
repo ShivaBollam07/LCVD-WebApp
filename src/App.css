@@ -194,7 +194,7 @@
 .carousel-content img {
   display: block;
   width: auto;
-  height: 600px;
+  height: 750px;
   max-width: 100%;
   object-fit: cover;
   border-radius: 8px;
@@ -328,11 +328,11 @@
   }
 
   .carousel-btn {
-    padding: 0.5rem;
+    padding: 1rem;
   }
 
   .carousel-content img {
     height: auto;
-    max-height: 400px;
+    max-height: 700px;
   }
 }
