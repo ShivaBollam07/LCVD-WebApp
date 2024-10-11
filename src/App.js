@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { FaBars } from 'react-icons/fa';
 import './App.css';
 
 function App() {
@@ -14,6 +15,12 @@ function App() {
 }
 
 function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-content">  
@@ -21,20 +28,19 @@ function Navbar() {
           onClick={() => window.location.href = '#home'}
           style={{ cursor: 'pointer' }}
         >
-          <img 
-            style={{ height: '50px' }}
-          src={require('./assets/logo.png')} alt="Leaf Curl Virus Detection" />
+          <img style={{ height: '50px' }} src={require('./assets/logo.png')} alt="Leaf Curl Virus Detection" />
         </div>
-        <div className="nav-links">
-          <a href="#home">Home</a>
-          <a href="#features">Features</a>
-
+        <div className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
+          <a href="#home" onClick={toggleMenu}>Home</a>
+          <a href="#features" onClick={toggleMenu}>Features</a>
         </div>
+        <button className="burger-menu" onClick={toggleMenu}>
+          <FaBars />
+        </button>
       </div>
     </nav>
   );
 }
-
 
 function Hero() {
   return (
@@ -81,18 +87,71 @@ function ProjectDetails() {
 function AppShowcase() {
   const [currentImage, setCurrentImage] = useState(0);
   const images = ['pic-1.jpg', 'pic-2.jpg', 'pic-3.jpg', 'pic-4.jpg', 'pic-5.jpg'];
+  const carouselRef = useRef(null);
+  const startX = useRef(0);
+  const isSwiping = useRef(false);
 
+  const handleSwipe = useCallback((direction) => {
+    if (direction === 'next') {
+      setCurrentImage((prevImage) => (prevImage + 1) % images.length);
+    } else if (direction === 'prev') {
+      setCurrentImage((prevImage) => (prevImage === 0 ? images.length - 1 : prevImage - 1));
+    }
+  }, [images.length]);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    
+    const handleTouchStart = (e) => {
+      startX.current = e.touches[0].clientX;
+      isSwiping.current = true;
+    };
+
+    const handleTouchMove = (e) => {
+      if (!isSwiping.current) return;
+      const currentX = e.touches[0].clientX;
+      const diff = startX.current - currentX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          handleSwipe('next');
+        } else {
+          handleSwipe('prev');
+        }
+        isSwiping.current = false;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      isSwiping.current = false;
+    };
+
+    carousel.addEventListener('touchstart', handleTouchStart);
+    carousel.addEventListener('touchmove', handleTouchMove);
+    carousel.addEventListener('touchend', handleTouchEnd);
+
+    return () => {
+      carousel.removeEventListener('touchstart', handleTouchStart);
+      carousel.removeEventListener('touchmove', handleTouchMove);
+      carousel.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [handleSwipe]);
 
   return (
     <section className="app-showcase">
       <h2>App Screenshots</h2>
-      <div className="carousel">
+      <div className="carousel" ref={carouselRef}>
+        <button className="carousel-btn prev" onClick={() => handleSwipe('prev')}>
+          &#8249;
+        </button>
         <div className="carousel-content">
           <img 
             src={require(`./assets/${images[currentImage]}`)}
             alt={`App screenshot ${currentImage + 1}`} 
           />
         </div>
+        <button className="carousel-btn next" onClick={() => handleSwipe('next')}>
+          &#8250;
+        </button>
         <div className="carousel-dots">
           {images.map((_, index) => (
             <span 
@@ -141,7 +200,5 @@ function Features() {
     </section>
   );
 }
-
-
 
 export default App;
