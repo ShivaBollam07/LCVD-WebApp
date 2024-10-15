@@ -73,7 +73,7 @@ function ProjectDetails() {
           <ul>
             <li>Flutter for cross-platform mobile development</li>
             <li>Python for AI/ML model development</li>
-            <li>Node.js for Language Model implementation</li>
+            <li>Node.js for Backend API development</li>
             <li>Cloud services for model deployment</li>
           </ul>
         </div>
@@ -119,7 +119,6 @@ function Features() {
   const features = [
     { title: 'Instant Detection', description: 'Upload cropped leaf images for accurate and immediate disease detection' },
     { title: 'AI Powered Analysis', description: 'Advanced machine learning models trained on extensive datasets for precise detection' },
-    { title: 'Cross-Platform', description: 'Built with Flutter for seamless experience across Android and iOS devices' },
     { title: 'User-Friendly Interface', description: 'Simple and intuitive design for easy navigation and quick results' }
   ];
 
