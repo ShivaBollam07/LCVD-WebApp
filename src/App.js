@@ -69,7 +69,7 @@ function ProjectDetails() {
           <p>Our project aims to help farmers and agricultural experts detect Leaf Curl Virus disease in plants using artificial intelligence.</p>
         </div>
         <div className="detail-card">
-          <h3>Technology Stack Used</h3>
+          <h3>Technology Stack used</h3>
           <ul>
             <li>Flutter for cross-platform mobile development</li>
             <li>Python for AI/ML model development</li>
