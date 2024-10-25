@@ -50,10 +50,10 @@ function Hero() {
       <h1>Leaf Curl Virus Detection</h1>
       <p>Detect plant diseases instantly using AI-powered image analysis</p>
       <div className="download-section">
-        <a href="https://github.com/dlsathvik04/LCVD-flutterapp/releases/download/v0.4.0/app-release.apk" className="download-btn">
+        <a href="https://github.com/dlsathvik04/LCVD-flutterapp/releases/download/v0.5.0/app-release.apk" className="download-btn">
           Download App
         </a>
-        <img src={require('./assets/QrCode.png')} alt="QR Code" className="qr-code" />
+        <img src={require('./assets/QRcode.jpg')} alt="QR Code" className="qr-code" />
       </div>
     </section>
   );
